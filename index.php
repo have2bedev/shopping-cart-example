@@ -3,6 +3,12 @@ require "products.php";
 $totalCost = 0;
 $cart = json_decode($_COOKIE['cart'], true);
 
+if (isset($_GET)) {
+	foreach ($cart as $value) { 
+		$totalCost += $products[$value]['price'];
+	}
+}
+
 if (@$_GET['addToCart']) {
 	if (!$_COOKIE['cart']) {
 		$willBeAdded = [1 => $_GET['addToCart']];
@@ -19,13 +25,6 @@ if (@$_GET['removeFromCart']) {
 		unset($cart[$_GET['removeFromCart']]);
 		setcookie("cart", json_encode($cart));
 		header('Location:index.php');
-	}
-}
-
-if (isset($_COOKIE['cart'])) {
-	foreach ($cart as $value) {
-		$product = $products[$value];
-		$totalCost += $product['price'];
 	}
 }
 
