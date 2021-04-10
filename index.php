@@ -3,10 +3,8 @@ require "products.php";
 $totalCost = 0;
 $cart = json_decode($_COOKIE['cart'], true);
 
-if (isset($_GET)) {
-	foreach ($cart as $value) { 
-		$totalCost += $products[$value]['price'];
-	}
+foreach ($cart as $value) { 
+	$totalCost += $products[$value]['price'];
 }
 
 if (@$_GET['addToCart']) {
